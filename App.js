@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
@@ -19,6 +11,7 @@ export default function App() {
       ...currentGoals,
       { key: Math.random().toString(), value: goalTitle },
     ]);
+    setIsAddMode(false);
   };
 
   const removeGoalHandler = (goalId) => {
@@ -26,10 +19,18 @@ export default function App() {
       return currentGoals.filter((goal) => goal.key !== goalId);
     });
   };
+
+  const cancelGoalAdditionHandler = () => {
+    setIsAddMode(false);
+  };
   return (
     <View style={styles.screen}>
       <Button title="Masuk Ke mode tambah" onPress={() => setIsAddMode(true)} />
-      <GoalInput onPress={addGoalHandler} visible={isAddMode} />
+      <GoalInput
+        onPress={addGoalHandler}
+        visible={isAddMode}
+        onCancel={cancelGoalAdditionHandler}
+      />
       <FlatList
         keyExtractor={(enteredGoals) => enteredGoals.key}
         data={courseGoals}
@@ -57,13 +58,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-
-  listItem: {
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: "gray",
-    borderColor: "black",
-    borderWidth: 1,
   },
 });
