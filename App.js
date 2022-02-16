@@ -6,7 +6,13 @@ import GoalItem from "./components/GoalItem";
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
+
+  // console.log("Rendering Component : ", courseGoals);
+
   const addGoalHandler = (goalTitle) => {
+    if (goalTitle.length === 0) {
+      return;
+    }
     setCourseGoals((currentGoals) => [
       ...currentGoals,
       { key: Math.random().toString(), value: goalTitle },
@@ -15,6 +21,7 @@ export default function App() {
   };
 
   const removeGoalHandler = (goalId) => {
+    // console.log("TO BE Remove : ", goalId);
     setCourseGoals((currentGoals) => {
       return currentGoals.filter((goal) => goal.key !== goalId);
     });
